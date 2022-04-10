@@ -18,9 +18,6 @@ async function execute() {
     await db.query(tablesPayload);
   } catch (ex) {
     console.log(`Something wrong happend ${ex}`);
-  } finally {
-    await db.end();
-    console.log("Client disconnected successfully.");
   }
 }
 

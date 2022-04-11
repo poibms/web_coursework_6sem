@@ -1,6 +1,6 @@
 export {};
-const tablesPayload = require("./config/tablesPayload");
-const Pool = require("pg").Pool;
+const tablesPayload = require('./config/tablesPayload');
+const Pool = require('pg').Pool;
 const db = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -10,11 +10,11 @@ const db = new Pool({
 });
 
 execute();
-
+console.log(db);
 async function execute() {
   try {
     await db.connect();
-    console.log("Connected successfully.");
+    console.log('Connected successfully.');
     await db.query(tablesPayload);
   } catch (ex) {
     console.log(`Something wrong happend ${ex}`);

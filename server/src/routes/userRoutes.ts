@@ -1,7 +1,7 @@
-export {}
+export {};
 const userController = require('../controllers/userControllers');
 const authMiddleware = require('../middleware/authMiddleware');
-const Router = require("express");
+const Router = require('express');
 const router = new Router();
 
 router.post('/', userController.registration);

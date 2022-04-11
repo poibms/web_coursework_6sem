@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from "express";
-import { IGetUserAuthInfoRequest } from "../middleware/authMiddleware";
-const userService = require("../services/userService");
-const tokenService = require("../services/tokenService");
+import { Request, Response, NextFunction } from 'express';
+import { IGetUserAuthInfoRequest } from '../middleware/authMiddleware';
+const userService = require('../services/userService');
+const tokenService = require('../services/tokenService');
 
 class UserControllers {
   async registration(req: Request, res: Response, next: NextFunction) {
@@ -13,7 +13,7 @@ class UserControllers {
         email,
         role: user.role,
       });
-      return res.json(token);
+      return res.json({ token });
     } catch (e) {
       next(e);
     }
@@ -34,7 +34,11 @@ class UserControllers {
     }
   }
 
-  async getUser(req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) {
+  async getUser(
+    req: IGetUserAuthInfoRequest,
+    res: Response,
+    next: NextFunction,
+  ) {
     const { id } = req.user;
     const user = await userService.getUser(id);
     return res.json(user);

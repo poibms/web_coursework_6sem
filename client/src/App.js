@@ -1,4 +1,5 @@
 import React from 'react';
+import {BrowserRouter} from "react-router-dom";
 import './App.scss';
 
 import AppHeader from './components/addHeader/appHeader';
@@ -8,7 +9,9 @@ import AppHeader from './components/addHeader/appHeader';
 function App() {
   return (
     <div className="wrapper">
-      <AppHeader/>
+      <BrowserRouter>
+        <AppHeader/>
+      </BrowserRouter>
     </div>
   );
 }

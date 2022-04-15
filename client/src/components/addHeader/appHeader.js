@@ -1,6 +1,6 @@
 import {React} from 'react';
 import { NavLink } from 'react-router-dom';
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../../config/routes';
+import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../../config/routesConsts';
 import './appHeader.scss';
 
 const AppHeader = () => {

@@ -10,7 +10,6 @@ const db = new Pool({
 });
 
 execute();
-console.log(db);
 async function execute() {
   try {
     await db.connect();

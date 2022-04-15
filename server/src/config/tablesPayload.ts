@@ -21,7 +21,7 @@ const tablesPayload = `
   CREATE TABLE IF NOT EXISTS
   items (
     id SERIAL PRIMARY KEY,
-    title VARCHAR(128) NOT NULL,
+    title  VARCHAR(128) NOT NULL,
     description VARCHAR(128) NOT NULL,
     image VARCHAR(128) NOT NULL,
     collection_id integer,
@@ -38,9 +38,8 @@ const tablesPayload = `
   collection_tags (
     collection_id integer NOT NULL,
     tags_id integer NOT NULL,
-    PRIMARY KEY(collection_id, tags_id),
-    FOREIGN KEY (collection_id) references collections,
-    FOREIGN KEY (tags_id) references tags
+    FOREIGN KEY (collection_id) references collections(id),
+    FOREIGN KEY (tags_id) references tags(id)
   )
 
 `;

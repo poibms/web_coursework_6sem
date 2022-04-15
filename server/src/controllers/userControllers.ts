@@ -43,6 +43,20 @@ class UserControllers {
     const user = await userService.getUser(id);
     return res.json(user);
   }
+
+  async limitationUser(
+    req: IGetUserAuthInfoRequest,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { id } = req.user;
+      await userService.limitationUser(id);
+      return res.json('succesfull');
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 module.exports = new UserControllers();

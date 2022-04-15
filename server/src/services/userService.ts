@@ -16,6 +16,7 @@ class UserService {
       'Insert into users (email, password) values ($1, $2) returning *',
       [email, hashPassword],
     );
+    console.log(user.rows[0]);
     return user.rows[0];
   }
 
@@ -40,6 +41,14 @@ class UserService {
       [id],
     );
     return user.rows[0];
+  }
+
+  async limitationUser(id: number): Promise<void> {
+    const user = await this.getUser(id);
+    if (user.status === 'ACTIVE') {
+      await db.query('update users set status = BANED returning *');
+    }
+    await db.query('update users set status = ACTIVE returning *');
   }
 }
 

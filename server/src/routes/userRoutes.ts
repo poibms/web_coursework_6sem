@@ -7,5 +7,6 @@ const router = new Router();
 router.post('/', userController.registration);
 router.post('/login', userController.login);
 router.get('/', authMiddleware, userController.getUser);
+router.put('/limit', authMiddleware, userController.limitationUser);
 
 module.exports = router;

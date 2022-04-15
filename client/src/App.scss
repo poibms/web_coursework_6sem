@@ -1,0 +1,44 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  margin: 0;
+  padding: 20px 0;
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+  font-family: 'Roboto', sans-serif;
+}
+
+ul,
+li,
+dl {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    &:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+}
+
+.wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 0 15px;
+  border-radius: 10px;
+  min-height: 525px;
+}
+
+.content {
+  padding: 20px 0;
+}

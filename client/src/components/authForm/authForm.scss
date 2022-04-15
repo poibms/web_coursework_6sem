@@ -1,0 +1,45 @@
+@import '../../style/fonts.scss';
+.form {
+  position: relative;
+  max-width: 400px;
+  margin: 20px auto 20px;
+  border-radius: 30px;
+  box-shadow: 0 5px 10px 0 rgb(0 0 0 / 10%);
+
+  &_inner {
+    padding: 50px;
+  }
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-family: $headers_font;
+    font-weight: 500;
+    font-size: 24px;
+    color: #707981;
+  }
+
+  input {
+    box-sizing: border-box;
+    display: block;
+    width: 300px;
+    padding: 0 20px;
+    margin-bottom: 10px;
+    background: #E9EFF6;
+    border: none;
+    border-radius: 20px;
+    line-height: 40px;
+    outline: none;
+  }
+  input:focus {
+    border: 2px solid #00B4CC;
+  }
+  [type="submit"] {
+    margin-top: 30px;
+    color: #fff;
+    font-size: 14px;
+    border: none;
+    background-color: #00B4CC;
+    border-bottom: 4px solid #0492a5;
+  }
+}

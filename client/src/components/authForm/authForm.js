@@ -46,7 +46,7 @@ const AuthForm = () => {
                 name="password"
                 type="password"
                 onChange={(event) => {
-                  setEmail(event.target.value)
+                  setPassword(event.target.value)
                 }}
               />
               <label htmlFor="amount">Количество</label>

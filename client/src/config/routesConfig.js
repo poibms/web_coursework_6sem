@@ -1,31 +1,33 @@
-import Admin from "./pages/Admin";
-import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "./routesConsts";
-import Basket from "./pages/Basket";
-import Shop from "./pages/Shop";
-import Auth from "./pages/Auth";
+import ProfilePage from "../pages/profilePage";
+import AdminPage from "../pages/adminPage";
+import AuthPage from "../pages/authPage";
+import MainPage from "../pages/mainPage";
+import {LOGIN_ROUTE, REGISTRATION_ROUTE, PROFILE_ROUTE, ADMIN_ROUTE, MAIN_ROUTE} from "./routesConsts";
 
-export const authRoutes = [
+export const adminRoutes = [
   {
     path: ADMIN_ROUTE,
-    Component: Admin
-  },
-  {
-    path: BASKET_ROUTE,
-    Component: Basket
+    Component: AdminPage
   }
 ];
 
+export const authRoutes = [
+  {
+    path: PROFILE_ROUTE + '/:id',
+    Component: ProfilePage
+  },
+]
 export const publicRoutes = [
   {
-    path: SHOP_ROUTE,
-    Component: Shop
-  },
-  {
     path: LOGIN_ROUTE,
-    Component: Auth
+    Component: AuthPage
   },
   {
     path: REGISTRATION_ROUTE,
-    Component: Auth
-  }
+    Component: AuthPage
+  },
+  {
+    path: MAIN_ROUTE,
+    Component: MainPage
+  },
 ]

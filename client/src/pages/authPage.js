@@ -1,10 +1,11 @@
-import {React, useState} from 'react';
-import {NavLink, useLocation} from "react-router-dom";
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../config/routes';
-
+import React from 'react';
+import AuthForm from '../components/authForm/authForm';
 const AuthPage = () => {
   
-
+return (
+  // <AuthForm/>
+  <h1>AUTH</h1>
+)
 
 
 

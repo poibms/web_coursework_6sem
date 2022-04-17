@@ -11,7 +11,7 @@ module.exports = function (
   next: NextFunction,
 ) {
   try {
-    const token = req.headers.authorization!.split(' ')[1]; //Bearer afsafasfsaf
+    const token = req.headers.authorization?.split(' ')[1]; //Bearer afsafasfsaf
     if (!token) {
       return res.status(401).json({ message: 'user is not authorized' });
     }

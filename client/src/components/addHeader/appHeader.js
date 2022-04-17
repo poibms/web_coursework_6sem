@@ -2,7 +2,7 @@ import {React, useContext} from 'react';
 import {Context} from'../../index';
 import { observer } from 'mobx-react-lite';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE } from '../../config/routesConsts';
+import { LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, MAIN_ROUTE } from '../../config/routesConsts';
 import './appHeader.scss';
 
 const AppHeader = observer(() => {
@@ -12,6 +12,7 @@ const AppHeader = observer(() => {
   const logOut = () => {
     user.setUser({});
     user.setIsAuth(false);
+    localStorage.removeItem('token');
     navigate(MAIN_ROUTE);
   }
 

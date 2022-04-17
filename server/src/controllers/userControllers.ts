@@ -57,6 +57,15 @@ class UserControllers {
       next(e);
     }
   }
+
+  async check(req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) {
+    const token = tokenService.generate({
+      id: req.user.id,
+      email: req.user.email,
+      role: req.user.role,
+    });
+    return res.json({ token });
+  }
 }
 
 module.exports = new UserControllers();

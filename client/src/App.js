@@ -9,12 +9,10 @@ import AppRouter from './components/AppRouter';
 
 function App() {
   return (
-    <div className="wrapper">
-      <BrowserRouter>
-        <AppHeader/>
-        <AppRouter/>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <AppRouter/>
+    </BrowserRouter>
+
   );
 }
 export default App;

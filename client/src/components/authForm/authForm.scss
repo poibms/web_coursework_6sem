@@ -1,4 +1,5 @@
 @import '../../style/fonts.scss';
+@import '../../style/colors.scss';
 .form {
   position: relative;
   max-width: 400px;
@@ -34,12 +35,17 @@
   input:focus {
     border: 2px solid #00B4CC;
   }
-  [type="submit"] {
+  [type=submit] {
     margin-top: 30px;
     color: #fff;
     font-size: 14px;
     border: none;
     background-color: #00B4CC;
     border-bottom: 4px solid #0492a5;
+  }
+
+  &_error {
+    color: $error_color;
+    font-size: 12px;
   }
 }

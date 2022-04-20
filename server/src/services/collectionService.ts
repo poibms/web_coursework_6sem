@@ -1,6 +1,5 @@
 export {};
 import { CollectionPayload, Collection } from '../config/collectionPayload';
-
 const ApiError = require('../error/apiError');
 const db = require('../db');
 const itemService = require('./itemService');
@@ -14,10 +13,10 @@ class CollectionService {
     image: any,
     tags: number[],
   ) {
-    // const imageName = await fileService.createFile(image);
+    const imageName = await fileService.createFile(image);
     const collection = await db.query(
       'Insert into collections (title, description, image, owner_id) values($1, $2, $3, $4) returning *',
-      [title, description, image, owner_id],
+      [title, description, imageName, owner_id],
     );
     await this.addCollectTags(collection.rows[0].id, tags);
     return collection.rows[0];

@@ -5,23 +5,20 @@ const ApiError = require('../error/apiError');
 const collectionService = require('../services/collectionService');
 
 class CollectionControllers {
-  async createCollection(
-    req: IGetUserAuthInfoRequest,
-    res: Response,
-    next: NextFunction,
-  ) {
+  async createCollection(req: any, res: Response, next: NextFunction) {
     try {
       const { id } = req.user;
-      const { title, description, image, tags } = req.body;
-      console.log(title);
+      const { title, description, tags } = req.body;
+      console.log(tags);
+      const { image } = req.files;
       const collection = await collectionService.createCollection(
         id,
         title,
         description,
         image,
-        tags,
       );
-      return res.json(collection);
+      await collectionService.addCollectTags(tags);
+      return res.json({ collection });
     } catch (e) {
       next(e);
     }

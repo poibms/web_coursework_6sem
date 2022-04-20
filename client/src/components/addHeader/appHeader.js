@@ -8,6 +8,7 @@ import './appHeader.scss';
 const AppHeader = observer(() => {
   const {user} = useContext(Context)
   const navigate = useNavigate();
+  console.log(user._user.id)
 
   const logOut = () => {
     user.setUser({});
@@ -15,7 +16,6 @@ const AppHeader = observer(() => {
     localStorage.removeItem('token');
     navigate(MAIN_ROUTE);
   }
-
   return (
   <div className="header">
     <h1>My litle collection</h1>

@@ -3,6 +3,7 @@ const express = require('express');
 const pool = require('./db');
 const router = require('./routes/index.ts');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 const errorHandler = require('./middleware/errorHandlingMiddleware');
 
 const PORT = process.env.PORT || 5000;
@@ -11,7 +12,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-
+app.use(fileUpload({}));
 app.use('/api', router);
 
 //error middleware

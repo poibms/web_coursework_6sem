@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import UserStore from "./store/userStore";
-// import DeviceStore from "./store/DeviceStore";
+import CollectionStore from './store/collectionsStore';
 
 export const Context = createContext(null);
-console.log(process.env.REACT_APP_API_URL);
 
 ReactDOM.render(
   <Context.Provider value={{
     user: new UserStore(),
+    collection: new CollectionStore(),
   }}>
     <App />,
   </Context.Provider>,

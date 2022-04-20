@@ -5,11 +5,8 @@ const MainPage = () => {
 
   return (
     <>
-    <div className="wrapper">
-      <AppHeader/>
+      {/* <AppHeader/> */}
       <h1>Main Page</h1>
-
-    </div>
     </>
   )
 }

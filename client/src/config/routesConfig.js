@@ -1,4 +1,4 @@
-import ProfilePage from "../pages/profilePage";
+import ProfilePage from "../pages/profilePage/profilePage";
 import AdminPage from "../pages/adminPage";
 import AuthPage from "../pages/authPage/authPage";
 import MainPage from "../pages/mainPage";
@@ -13,7 +13,7 @@ export const adminRoutes = [
 
 export const authRoutes = [
   {
-    path: PROFILE_ROUTE + '/:id',
+    path: PROFILE_ROUTE,
     Component: ProfilePage
   },
 ]

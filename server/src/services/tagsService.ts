@@ -17,7 +17,7 @@ class TagsService {
 
   async getAllTags() {
     const tags = await db.query('select * from tags');
-    return tags.rows[0];
+    return tags.rows;
   }
 }
 

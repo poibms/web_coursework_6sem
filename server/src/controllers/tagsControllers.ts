@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { IGetUserAuthInfoRequest } from '../middleware/authMiddleware';
 
 const tagsService = require('../services/tagsService');
 
@@ -18,6 +17,7 @@ class TagsControllers {
   async getAllTags(req: Request, res: Response, next: NextFunction) {
     try {
       const tags = await tagsService.getAllTags();
+      console.log(tags);
       return res.json({ tags });
     } catch (e) {
       next(e);

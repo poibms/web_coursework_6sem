@@ -2,7 +2,8 @@ import ProfilePage from "../pages/profilePage/profilePage";
 import AdminPage from "../pages/adminPage";
 import AuthPage from "../pages/authPage/authPage";
 import MainPage from "../pages/mainPage";
-import {LOGIN_ROUTE, REGISTRATION_ROUTE, PROFILE_ROUTE, ADMIN_ROUTE, MAIN_ROUTE} from "./routesConsts";
+import CollectionPage from "../pages/collectionPage";
+import {LOGIN_ROUTE, REGISTRATION_ROUTE, PROFILE_ROUTE, ADMIN_ROUTE, MAIN_ROUTE, COLLECTION_ROUTE} from "./routesConsts";
 
 export const adminRoutes = [
   {
@@ -29,5 +30,9 @@ export const publicRoutes = [
   {
     path: MAIN_ROUTE,
     Component: MainPage
+  },
+  {
+    path: COLLECTION_ROUTE + '/:id',
+    Component: CollectionPage
   },
 ]

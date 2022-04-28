@@ -5,6 +5,11 @@ const authMiddleware = require('../middleware/authMiddleware');
 const Router = require('express');
 const router = new Router();
 
+router.get(
+  '/user',
+  authMiddleware,
+  collectionControllers.getCollectionsByUserId,
+);
 router.get('/:id', collectionControllers.getColById);
 router.post('/', authMiddleware, collectionControllers.createCollection);
 router.delete(
@@ -12,6 +17,8 @@ router.delete(
   authMiddleware,
   collectionControllers.deleteCollection,
 );
+router.get('/', collectionControllers.getCollections);
+router.put('/:id', authMiddleware, collectionControllers.updateCollection);
 router.post('/:id', authMiddleware, itemsController.createItem);
 router.delete('/:id/:itemId', authMiddleware, itemsController.deleteItem);
 

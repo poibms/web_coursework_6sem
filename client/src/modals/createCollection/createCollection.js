@@ -1,52 +1,97 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Modal, Button, Dropdown, Form } from 'react-bootstrap';
 import { getAllTags } from '../../services/tagsService';
-import { createCollection } from '../../services/collectionService';
+import { useParams } from 'react-router-dom';
+import {
+  createCollection,
+  updateCollection,
+} from '../../services/collectionService';
 import { Formik, Field, ErrorMessage, useField } from 'formik';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../index';
 import * as yup from 'yup';
 import './modals.scss';
 
-const CreateCollection = observer(({ show, onHide }) => {
-  const { collection } = useContext(Context);
+const CreateCollection = observer(({ collectionPayload, show, onHide }) => {
+  const { collection, tags } = useContext(Context);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [file, setFile] = useState(null);
-  const [tags, setTags] = useState([]);
+  const [collectTags, setCollectTags] = useState([]);
+  const [tagsState, setTagsState] = useState([]);
+  const { id } = useParams();
 
   useEffect(() => {
-    getAllTags().then((data) => collection.setTags(data));
-  }, [collection]);
+    getAllTags().then((data) => tagsHandler(data));
+    if (collectionPayload !== undefined) {
+      setTitle(collectionPayload.title);
+      setDescription(collectionPayload.description);
+      setCollectTags(collectionPayload.tags);
+      collectionPayload.tags.forEach((tag) => {
+        setTagsState(tagsState.filter((i) => i.id != tag.id));
+      });
+    }
+  }, []);
+  const tagsHandler = (data) => {
+    console.log(data);
+    tags.setTags(data);
+    setTagsState(data);
+  };
 
-
-  const selectFile = (e) => {
-    setFile(e.target.files[0]);
+  const editCollectHandler = (payload) => {
+    setTitle(collectionPayload.title);
+    setDescription(collectionPayload.description);
+    setCollectTags(payload.tags);
+    payload.tags.forEach((tag) => {
+      console.log(tag);
+      console.log(tagsState);
+      setTagsState(tagsState.filter((i) => i.id != tag.id));
+      console.log(tagsState.filter((i) => i.id != tag.id));
+    });
   };
 
   const addTag = (tag) => {
-    collection.setTags(collection.tags.filter((i) => i.id != tag.id));
-    setTags([...tags, tag]);
+    setTagsState(tagsState.filter((i) => i.id != tag.id));
+    setCollectTags([...collectTags, tag]);
   };
 
   const removeTag = (tag) => {
-    setTags(tags.filter((i) => i.id !== tag.id));
-    collection.setTags([...collection.tags, tag]);
+    setCollectTags(collectTags.filter((i) => i.id !== tag.id));
+    setTagsState([...tagsState, tag]);
   };
 
   const addDevice = () => {
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('image', file);
-    formData.append('tags', JSON.stringify(tags));
-    createCollection(formData).then((data) => onHide());
+    if (collectionPayload == undefined) {
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('image', file);
+      formData.append('tags', JSON.stringify(collectTags));
+      createCollection(formData).then((data) => onHide());
+    } else {
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description);
+      if(file !== null) {
+        console.log('if')
+        console.log(file)
+        formData.append('image', file);
+      } else {
+        console.log('else')
+        console.log(file)
+        formData.append('image', collectionPayload.image);
+      }
+      if(collectionPayload.tags !== collectTags) {
+        formData.append('tags', JSON.stringify(collectTags));
+      }
+      updateCollection(id, formData).then((data) => onHide());
+    }
   };
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Добавить коллекцию
+          {collectionPayload ? 'Edit your collection' : 'Add collection'}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -88,13 +133,33 @@ const CreateCollection = observer(({ show, onHide }) => {
               name="description"
               component="div"
             />
-            <Form.Control className="mt-3" type="file" onChange={selectFile} />
+
+            {collectionPayload ? (
+              <div className="d-flex align-items-center">
+                <label style={{ marginRight: '40px' }}>Your image: </label>
+                <img
+                  className="mt-2"
+                  src={
+                    process.env.REACT_APP_API_URL +
+                    '/' +
+                    collectionPayload.image
+                  }
+                  style={{ height: '100px', width: '100px' }}
+                />
+              </div>
+            ) : null}
+
+            <Form.Control
+              className="mt-3"
+              type="file"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
             <label className="modals-form_label">Выберите теги</label>
 
             <div className="tags">
-              {tags.length > 0 ? (
+              {collectTags.length > 0 ? (
                 <div className="tags_container">
-                  {tags.map((tag) => (
+                  {collectTags.map((tag) => (
                     <div className="tags_item" key={tag.id}>
                       <span className="tags_text">{tag.text}</span>
                       <span
@@ -110,9 +175,9 @@ const CreateCollection = observer(({ show, onHide }) => {
                 <span className="tags_stub">Вы ещё не выбрали теги</span>
               )}
 
-              {collection.tags.length > 0 ? (
+              {tagsState.length > 0 ? (
                 <div className="tags_container">
-                  {collection.tags.map((tag) => (
+                  {tagsState.map((tag) => (
                     <div
                       className="tags_item"
                       key={tag.id}

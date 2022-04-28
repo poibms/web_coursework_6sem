@@ -20,7 +20,6 @@ const AuthPage = observer(() => {
     } else {
       data = await registration(email, password);
     }
-    console.log(data);
     user.setUser(data)
     user.setIsAuth(true)
     navigate(MAIN_ROUTE)

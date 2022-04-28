@@ -1,0 +1,19 @@
+@import '../../style/colors.scss';
+.drop {
+  button {
+    background-color: transparent !important;
+    border-color: black;
+    color: #000;
+    font-weight: bold !important;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+  }
+  button:hover {
+    color: $focus_color;
+  }
+  button:active {
+    color: red;
+  }
+}

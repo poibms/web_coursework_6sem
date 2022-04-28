@@ -13,12 +13,13 @@
     font-size: 26px;
   }
   &_menu {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 32px;
     ul {
       display: flex;
-      justify-content: space-between;
-      font-weight: bold;
-      font-size: 18px;
-      line-height: 32px;
     }
     li {
       margin: 0 8px;

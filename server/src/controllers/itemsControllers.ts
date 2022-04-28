@@ -4,16 +4,19 @@ import { IGetUserAuthInfoRequest } from '../middleware/authMiddleware';
 const itemsService = require('../services/itemService');
 
 class ItemsControllers {
-  async createItem(
-    req: IGetUserAuthInfoRequest,
-    res: Response,
-    next: NextFunction,
-  ) {
+  async createItem(req: any, res: Response, next: NextFunction) {
     try {
-      const { payload } = req.body;
+      const { title, description } = req.body;
+      const { image } = req.files;
       const { id } = req.user;
       const collectId = req.params.id;
-      const item = await itemsService.createItem(payload, collectId, id);
+      const item = await itemsService.createItem(
+        title,
+        description,
+        image,
+        collectId,
+        id,
+      );
       return res.json(item);
     } catch (err) {
       next(err);

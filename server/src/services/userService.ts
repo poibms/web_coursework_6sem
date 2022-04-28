@@ -5,6 +5,8 @@ const db = require('../db');
 
 class UserService {
   async registration(email: string, password: string): Promise<string> {
+    let user;
+    const checkCount = await db.query('select count(users.id) from users');
     const checkLogin = await db.query('Select * from users where email=$1', [
       email,
     ]);
@@ -12,10 +14,18 @@ class UserService {
       throw ApiError.BadRequest('User with such email has already been found');
     }
     const hashPassword = await bcrypt.hash(password, 4);
-    const user = await db.query(
-      'Insert into users (email, password) values ($1, $2) returning *',
-      [email, hashPassword],
-    );
+
+    if (checkCount.rows[0].count == 0) {
+      user = await db.query(
+        'Insert into users (email, password, role) values ($1, $2, $3) returning *',
+        [email, hashPassword, 'ADMIN'],
+      );
+    } else {
+      user = await db.query(
+        'Insert into users (email, password) values ($1, $2) returning *',
+        [email, hashPassword],
+      );
+    }
     console.log(user.rows[0]);
     return user.rows[0];
   }

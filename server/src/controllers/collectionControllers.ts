@@ -9,7 +9,6 @@ class CollectionControllers {
     try {
       const { id } = req.user;
       const { title, description, tags } = req.body;
-      console.log(tags);
       const { image } = req.files;
       const collection = await collectionService.createCollection(
         id,
@@ -17,8 +16,32 @@ class CollectionControllers {
         description,
         image,
       );
-      await collectionService.addCollectTags(tags);
+      await collectionService.addCollectTags(collection.id, tags);
       return res.json({ collection });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getCollections(req: Request, res: Response, next: NextFunction) {
+    try {
+      const collections = await collectionService.getCollections();
+      return res.json(collections);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getCollectionsByUserId(
+    req: IGetUserAuthInfoRequest,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      console.log(req.user);
+      const { id } = req.user;
+      const collections = await collectionService.getCollectionsByUserId(id);
+      return res.json(collections);
     } catch (e) {
       next(e);
     }
@@ -28,6 +51,7 @@ class CollectionControllers {
     try {
       const id = req.params.id;
       const { collection } = await collectionService.getColById(id);
+      console.log(collection.rows);
       return res.json(collection.rows[0]);
     } catch (e) {
       next(ApiError.BadRequest(e));
@@ -49,16 +73,21 @@ class CollectionControllers {
     }
   }
 
-  public async updateCollection(
-    req: IGetUserAuthInfoRequest,
-    res: Response,
-    next: NextFunction,
-  ) {
+  public async updateCollection(req: any, res: Response, next: NextFunction) {
     try {
       const { id } = req.user;
       const colId = req.params.id;
-      const { payload } = req.body;
-      return collectionService.updateCollection(id, payload, colId);
+      const { title, description, tags } = req.body;
+      const { image } = req.files;
+      const updatedCol = await collectionService.updateCollection(
+        id,
+        title,
+        description,
+        image,
+        tags,
+        colId,
+      );
+      return res.json(updatedCol);
     } catch (e) {
       next(e);
     }

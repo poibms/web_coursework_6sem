@@ -2,13 +2,13 @@ import {React, useContext} from 'react';
 import {Context} from'../../index';
 import { observer } from 'mobx-react-lite';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, MAIN_ROUTE } from '../../config/routesConsts';
+import { LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, MAIN_ROUTE, ADMIN_ROUTE } from '../../config/routesConsts';
+import AdminDropDown from '../dropDownMenu/adminDropDown';
 import './appHeader.scss';
 
 const AppHeader = observer(() => {
   const {user} = useContext(Context)
   const navigate = useNavigate();
-  console.log(user._user.id)
 
   const logOut = () => {
     user.setUser({});
@@ -18,8 +18,15 @@ const AppHeader = observer(() => {
   }
   return (
   <div className="header">
-    <h1>My litle collection</h1>
+    <h1 onClick={() => navigate(MAIN_ROUTE)}>My litle collection</h1>
     <div className='header_menu'>
+      {user.user.role === 'ADMIN' ? (
+        <ul>
+          <li>
+            <AdminDropDown/>
+          </li>
+        </ul>
+      ): null}
       {user.isAuth ? (
         <ul>
           <li><NavLink to={PROFILE_ROUTE}>Account</NavLink></li>

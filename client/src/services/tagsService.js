@@ -1,8 +1,7 @@
 import { $authHost, $host } from "./index";
 
 export const createTag = async (text) => {
-  const { tag } = await $authHost.post('/api/tags');
-  console.log(tag);
+  const { tag } = await $authHost.post('/api/tags', text);
   return 'success';
 }
 

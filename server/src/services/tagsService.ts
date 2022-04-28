@@ -16,7 +16,17 @@ class TagsService {
   }
 
   async getAllTags() {
-    const tags = await db.query('select * from tags');
+    const tags = await db.query(`select * from tags`);
+    return tags.rows;
+  }
+
+  async getTagsByCollId(id: number) {
+    const tags = await db.query(
+      `select * from tags left join collection_tags 
+    on tags.id = collection_tags.tags_id
+    where collection_tags.collection_id = $1`,
+      [id],
+    );
     return tags.rows;
   }
 }

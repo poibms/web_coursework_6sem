@@ -6,7 +6,6 @@ class TagsControllers {
   async createTag(req: Request, res: Response, next: NextFunction) {
     try {
       const { text } = req.body;
-      console.log(text);
       const tag = await tagsService.createTag(text);
       return res.json({ tag });
     } catch (err) {
@@ -17,7 +16,6 @@ class TagsControllers {
   async getAllTags(req: Request, res: Response, next: NextFunction) {
     try {
       const tags = await tagsService.getAllTags();
-      console.log(tags);
       return res.json({ tags });
     } catch (e) {
       next(e);

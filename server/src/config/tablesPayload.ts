@@ -15,7 +15,7 @@ const tablesPayload = `
     description VARCHAR(128) NOT NULL,
     image VARCHAR(128) NOT NULL,
     owner_id integer,
-    FOREIGN KEY (owner_id) references users(id)
+    FOREIGN KEY (owner_id) references users(id) ON DELETE CASCADE
   );
 
   CREATE TABLE IF NOT EXISTS
@@ -25,7 +25,7 @@ const tablesPayload = `
     description VARCHAR(128) NOT NULL,
     image VARCHAR(128) NOT NULL,
     collection_id integer,
-    FOREIGN KEY (collection_id) references collections(id)
+    FOREIGN KEY (collection_id) references collections(id) ON DELETE CASCADE
   );
 
   CREATE TABLE IF NOT EXISTS
@@ -38,8 +38,8 @@ const tablesPayload = `
   collection_tags (
     collection_id integer NOT NULL,
     tags_id integer NOT NULL,
-    FOREIGN KEY (collection_id) references collections(id),
-    FOREIGN KEY (tags_id) references tags(id)
+    FOREIGN KEY (collection_id) references collections(id) ON DELETE CASCADE,
+    FOREIGN KEY (tags_id) references tags(id) ON DELETE CASCADE
   )
 
 `;

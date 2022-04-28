@@ -1,17 +1,17 @@
 import {makeAutoObservable} from 'mobx';
 
-export default class UserStore {
+export default class TagsStore {
   constructor() {
-    this.tags = [];
+    this._tags = [];
     makeAutoObservable(this);
   }
 
   setTags(tags) {
-    this._user = user
+    this._tags = tags
   }
 
-  get user() {
-    return this._user
+  get tags() {
+    return this._tags
   }  
   
 } 

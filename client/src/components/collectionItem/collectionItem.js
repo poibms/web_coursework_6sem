@@ -2,12 +2,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Col, Container, Image, Row, Card, Button } from 'react-bootstrap';
 import './collectionItem.scss';
 import { Context } from '../../index';
+import ItemList from '../itemList/itemList';
 
 const CollectionItem = (props) => {
   const { collection, deleteHandler, editHandler, itemHandler } = props;
   const [collectVisible, setCollectVisible] = useState(false);
   const { user } = useContext(Context);
-
+  console.log(collection)
+  console.log(collection.items)
   const CollectionMenu = () => {
     return (
       <Col md={4} style={{ position: 'relative' }}>
@@ -69,6 +71,16 @@ const CollectionItem = (props) => {
         </Col>
         {menu}
       </Row>
+
+      {collection.items[0] != null ? (
+        <Row>
+        <h2>Collection's items</h2>
+        <ItemList items={collection.items}/>
+      </Row>
+      ): (
+        <h2>no</h2>
+      )}
+      
     </Container>
   );
 };

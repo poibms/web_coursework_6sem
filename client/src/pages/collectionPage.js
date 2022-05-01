@@ -15,20 +15,23 @@ import CreateCollection from '../modals/createCollection/createCollection';
 import CreateItem from '../modals/createItem';
 
 const CollectionPage = observer(() => {
-  const [collectionState, setCollectionState] = useState({ tags: [] });
+  const [collectionState, setCollectionState] = useState({ tags: [], items: [] });
   const [collectVisible, setCollectVisible] = useState(false);
   const [itemVisible, setItemVisible] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
   const { collection, tags } = useContext(Context);
   useEffect(() => {
-    getCollectionById(id).then((data) => setCollectionState(data));
-  }, []);
-
+    getCollectionById(id).then((data) => setCollectionState({...data.collection, items: data.collectItems}));
+  }, [collectionState]);
+  
+  console.log(collectionState);
   const deleteHandler = (id) => {
     deleteCollection(id).then((data) => alert(data));
+    collection.setCollections(collection.collections.filter((i) => i.id != id));
     navigate(MAIN_ROUTE);
   };
+  
   const editHandler = () => {
     setCollectVisible(true);
   };

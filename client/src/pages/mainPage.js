@@ -12,7 +12,7 @@ const MainPage = observer(() => {
   useEffect(() => {
     getCollections().then((data) => setData(data)); 
     getAllTags().then((data) => console.log(data));
-  }, [collection]);
+  }, [collection.collections]);
   
   const setData = (data) => {
     collection.setCollections(data);

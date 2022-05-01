@@ -37,3 +37,8 @@ export const createItem = async(id, payload) => {
   const response = await $authHost.post('/api/collections/' + id, payload);
   return response.data;
 }
+
+export const deleteITem = async(id,  itemId) => {
+  await $authHost.delete(`/api/collections/${id}/${itemId}`);
+  console.log('success');
+}

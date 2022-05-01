@@ -78,16 +78,16 @@ class CollectionService {
 
   async getColById(id: number) {
     const collection = await db.query(
-      `select 
-        col.id, col.title, col.description, col.image, col.owner_id,
-        json_agg(tags)
-        as tags
-        from collections as col
-        inner join collection_tags as col_tags
-        on col.id = col_tags.collection_id
-        inner join tags on col_tags.tags_id = tags.id
-        where col.id = $1
-        group by col.id order by col.id asc`,
+      `select
+       col.id, col.title, col.description, col.image, col.owner_id,
+       json_agg(tags)::jsonb
+          as tags
+       from collections as col
+       inner join collection_tags as col_tags
+       on col.id = col_tags.collection_id
+       inner join tags on col_tags.tags_id = tags.id
+       where col.id = $1
+       group by col.id order by col.id asc`,
       [id],
     );
     const collectItems = await itemService.getItemsByCollectId(id);

@@ -50,9 +50,10 @@ class CollectionControllers {
   async getColById(req: Request, res: Response, next: NextFunction) {
     try {
       const id = req.params.id;
-      const { collection } = await collectionService.getColById(id);
-      console.log(collection.rows);
-      return res.json(collection.rows[0]);
+      // eslint-disable-next-line prefer-const
+      let { collection, collectItems } = await collectionService.getColById(id);
+      collection = collection.rows[0];
+      return res.json({ collection, collectItems });
     } catch (e) {
       next(ApiError.BadRequest(e));
     }

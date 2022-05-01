@@ -5,7 +5,7 @@ import { AiFillEdit } from "react-icons/ai";
 
 import './itemList.scss';
 
-const ItemList = ({ items }) => {
+const ItemList = ({ items, deleteItem, itemHandler }) => {
   return (
     <>
       {items.map((item) => (
@@ -25,8 +25,8 @@ const ItemList = ({ items }) => {
               <Card.Text>{item.description}</Card.Text>
             </Card.Body>
             <Card.Footer>
-            <MdDelete className='icons' />
-            <AiFillEdit className='icons' />
+            <MdDelete className='icons' onClick={() => deleteItem(item.id)} />
+            <AiFillEdit className='icons' onClick={() => itemHandler(item)}/>
             </Card.Footer>
           </Card>
         </Col>

@@ -6,7 +6,7 @@ import '../modals/createCollection/modals.scss';
 import {
   getCollectionById,
   deleteCollection,
-  updateCollection,
+  deleteItem
 } from '../services/collectionService';
 import CollectionItem from '../components/collectionItem/collectionItem';
 import { MAIN_ROUTE } from '../config/routesConsts';
@@ -18,27 +18,35 @@ const CollectionPage = observer(() => {
   const [collectionState, setCollectionState] = useState({ tags: [], items: [] });
   const [collectVisible, setCollectVisible] = useState(false);
   const [itemVisible, setItemVisible] = useState(false);
+  const [itemPayload, setItemPayload] = useState();
   const { id } = useParams();
   const navigate = useNavigate();
   const { collection, tags } = useContext(Context);
+
   useEffect(() => {
-    getCollectionById(id).then((data) => setCollectionState({...data.collection, items: data.collectItems}));
-  }, [collectionState]);
-  
-  console.log(collectionState);
+    getCollectionById(id).then((data) => setCollectionState({ ...data.collection, items: data.collectItems }));
+  }, []);
+
   const deleteHandler = (id) => {
     deleteCollection(id).then((data) => alert(data));
     collection.setCollections(collection.collections.filter((i) => i.id != id));
     navigate(MAIN_ROUTE);
   };
-  
+
   const editHandler = () => {
     setCollectVisible(true);
   };
 
-  const itemHandler = () => {
+  const itemHandler = (payload = undefined) => {
+    setItemPayload(payload);
     setItemVisible(true);
   }
+
+  const deleteCollItem = (colId) => {
+    deleteItem(id, colId).then(() =>
+      setCollectionState({ ...collectionState, items: collectionState.items.filter((i) => i.id != colId) }));
+  }
+
 
   return (
     <>
@@ -47,6 +55,7 @@ const CollectionPage = observer(() => {
         collection={collectionState}
         deleteHandler={deleteHandler}
         itemHandler={itemHandler}
+        deleteItem={deleteCollItem}
       />
       {collectVisible ? (
         <CreateCollection
@@ -56,7 +65,7 @@ const CollectionPage = observer(() => {
         />
       ) : null}
       {itemVisible ? (
-        <CreateItem show={itemVisible} onHide={() => setItemVisible(false)} />
+        <CreateItem itemPayload={itemPayload} show={itemVisible} onHide={() => setItemVisible(false)} />
       ) : null}
     </>
   );

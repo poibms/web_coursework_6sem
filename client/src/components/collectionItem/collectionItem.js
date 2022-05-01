@@ -5,11 +5,10 @@ import { Context } from '../../index';
 import ItemList from '../itemList/itemList';
 
 const CollectionItem = (props) => {
-  const { collection, deleteHandler, editHandler, itemHandler } = props;
+  const { collection, deleteHandler, editHandler, itemHandler, deleteItem } = props;
   const [collectVisible, setCollectVisible] = useState(false);
   const { user } = useContext(Context);
-  console.log(collection)
-  console.log(collection.items)
+
   const CollectionMenu = () => {
     return (
       <Col md={4} style={{ position: 'relative' }}>
@@ -75,11 +74,9 @@ const CollectionItem = (props) => {
       {collection.items[0] != null ? (
         <Row>
         <h2>Collection's items</h2>
-        <ItemList items={collection.items}/>
+        <ItemList items={collection.items} itemHandler={itemHandler} deleteItem={deleteItem}/>
       </Row>
-      ): (
-        <h2>no</h2>
-      )}
+      ): null}
       
     </Container>
   );

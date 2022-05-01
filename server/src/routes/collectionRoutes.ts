@@ -21,5 +21,6 @@ router.get('/', collectionControllers.getCollections);
 router.put('/:id', authMiddleware, collectionControllers.updateCollection);
 router.post('/:id', authMiddleware, itemsController.createItem);
 router.delete('/:id/:itemId', authMiddleware, itemsController.deleteItem);
+router.put('/:id/:itemId', authMiddleware, itemsController.updateItem);
 
 module.exports = router;

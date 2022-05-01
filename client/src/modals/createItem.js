@@ -6,8 +6,7 @@ import { Formik, Field, ErrorMessage, useField } from 'formik';
 import { observer } from 'mobx-react-lite';
 
 import { Context } from '../index';
-import { createItem } from '../services/collectionService';
-import * as yup from 'yup';
+import { createItem, updateItem } from '../services/collectionService';
 import './createCollection/modals.scss';
 
 const CreateItem = observer(({ itemPayload, show, onHide }) => {
@@ -21,7 +20,6 @@ const CreateItem = observer(({ itemPayload, show, onHide }) => {
     if (itemPayload !== undefined) {
       setTitle(itemPayload.title);
       setDescription(itemPayload.description);
-      setCollectTags(itemPayload.tags);
     }
   }, []);
 
@@ -39,18 +37,19 @@ const CreateItem = observer(({ itemPayload, show, onHide }) => {
       formData.append('image', file);
       createItem(id, formData).then((data) => onHide());
     } 
-    // else {
-    //   const formData = new FormData();
-    //   formData.append('title', title);
-    //   formData.append('description', description);
-    //   if(file !== null) {
-    //     formData.append('image', file);
-    //   } else {
-    //     formData.append('image', itemPayload.image);
-    //   }
-    //   updateCollection(id, formData).then((data) => onHide());
-    // }
+    else {
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description);
+      if(file !== null) {
+        formData.append('image', file);
+      }
+      
+      updateItem(id, itemPayload.id, formData).then((data) => onHide());
+    }
   };
+
+
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>

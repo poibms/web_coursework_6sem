@@ -38,7 +38,12 @@ export const createItem = async(id, payload) => {
   return response.data;
 }
 
-export const deleteITem = async(id,  itemId) => {
-  await $authHost.delete(`/api/collections/${id}/${itemId}`);
-  console.log('success');
+export const deleteItem = async(id,  itemId) => {
+  const res = await $authHost.delete(`/api/collections/${id}/${itemId}`);
+  return 'success';
+}
+
+export const updateItem = async(id,  itemId, payload) => {
+  const res = await $authHost.put(`/api/collections/${id}/${itemId}`, payload);
+  console.log(res.data)
 }

@@ -50,5 +50,40 @@ class ItemService {
     );
     return items.rows;
   }
+
+  async getItemsById(id: number) {
+    const items = await db.query(
+      'select * from items where items.id = $1',
+      [id],
+    );
+    return items.rows[0];
+  }
+
+  public async updateItem(
+    id: number,
+    payload: any,
+    itemId: number,
+    image: any = undefined,
+  ) {
+    console.log(image);
+    let imageName;
+    if(image != undefined) {
+      imageName = await fileService.createFile(image.image);
+      await db.query(
+        'Update items set title = $1, description = $2, image = $3 where id = $4 returning *',
+        [payload.title, payload.description, imageName, itemId],
+      );
+    } else {
+      await db.query(
+        'Update items set title = $1, description = $2 where id = $3 returning *',
+        [payload.title, payload.description, itemId],
+      );
+    }
+   
+    const collect = await this.getItemsById(itemId);
+    console.log(collect);
+    return collect;
+  }
+
 }
 module.exports = new ItemService();

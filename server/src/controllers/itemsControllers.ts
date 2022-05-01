@@ -38,6 +38,34 @@ class ItemsControllers {
       next(e);
     }
   }
+
+  public async updateItem(req: any, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.user;
+      const itemId = req.params.itemId;
+      console.log(itemId);
+      const payload = req.body;
+      const image = req.files;
+      let updatedCol;
+      if(!image) {
+        updatedCol = await itemsService.updateItem(
+          id,
+          payload,
+          itemId,
+        );  
+      }
+       updatedCol = await itemsService.updateItem(
+        id,
+        payload,
+        itemId,
+        image
+      );
+      return res.json(updatedCol);
+    } catch (e) {
+      next(e);
+    }
+  }
+
 }
 
 module.exports = new ItemsControllers();

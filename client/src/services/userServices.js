@@ -18,3 +18,13 @@ export const check = async() => {
   localStorage.setItem('token', data.token)
   return data;
 }
+
+export const getAllUsers = async() => {
+  const {data} = await $host.get('/api/user/all');
+  return data;
+}
+
+export const limitUser = async(id) => {
+  const {data} = await $authHost.put(`/api/user/limit/${id}`);
+  return data;
+}

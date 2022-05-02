@@ -34,14 +34,15 @@ class CollectionService {
 
   async getCollections() {
     const collections = await db.query(`select 
-    col.id, col.title, col.description, col.image, col.owner_id,
+    col.id, col.title, col.description, col.image, col.owner_id, users.email,
       json_agg(tags)
       as tags
     from collections as col
     inner join collection_tags as col_tags
     on col.id = col_tags.collection_id
     inner join tags on col_tags.tags_id = tags.id
-    group by col.id order by col.id asc`);
+    inner join users on col.owner_id = users.id
+    group by col.id, users.id order by col.id asc`);
     return collections.rows;
   }
 

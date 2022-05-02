@@ -47,18 +47,29 @@ class UserService {
 
   async getUser(id: number) {
     const user = await db.query(
-      'Select id, email, role from users where id = $1',
+      'Select id, email, role, status from users where id = $1',
       [id],
     );
     return user.rows[0];
   }
 
-  async limitationUser(id: number): Promise<void> {
-    const user = await this.getUser(id);
-    if (user.status === 'ACTIVE') {
-      await db.query('update users set status = BANED returning *');
+  async limitationUser(role: string, id: number): Promise<void> {
+    if(role !== 'ADMIN') {
+      throw new ApiError.NoAccesRights()
     }
-    await db.query('update users set status = ACTIVE returning *');
+    const user = await this.getUser(id);
+    if (user.status == 'ACTIVE') {
+      await db.query('update users set status = $2 where id = $1 returning *', [id, 'BANNED']);
+    } else {
+      await db.query('update users set status = $2 where id = $1  returning *', [id, 'ACTIVE']);
+    }
+    const updated = await this.getUser(id);
+    return updated
+  }
+
+  async getAllUsers() {
+    const users = await db.query('select id, email, status, role from users')
+    return users.rows;  
   }
 }
 

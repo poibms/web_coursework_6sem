@@ -14,6 +14,7 @@ const CreateItem = observer(({ itemPayload, show, onHide }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [file, setFile] = useState(null);
+  const [error, setError] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -35,7 +36,11 @@ const CreateItem = observer(({ itemPayload, show, onHide }) => {
       formData.append('title', title);
       formData.append('description', description);
       formData.append('image', file);
-      createItem(id, formData).then((data) => onHide());
+      validateInputs()
+      if(!error) {
+        createItem(id, formData).then((data) => onHide());
+      }
+      alert('Заполните все поля')
     } 
     else {
       const formData = new FormData();
@@ -49,7 +54,11 @@ const CreateItem = observer(({ itemPayload, show, onHide }) => {
     }
   };
 
-
+  const validateInputs = () => {
+    if(title == '' || description == '' || file == null) {
+      setError(true)
+    }
+  }
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>

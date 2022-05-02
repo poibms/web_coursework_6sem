@@ -15,6 +15,7 @@ const AuthForm = ({onSubmit}) => {
 
   return (
     <Formik
+
       initialValues={{
         email: '',
         password: '',

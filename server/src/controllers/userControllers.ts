@@ -44,15 +44,25 @@ class UserControllers {
     return res.json(user);
   }
 
+  async getAllUsers (req: Request, res: Response, next: NextFunction) {
+    try {
+      const users = await userService.getAllUsers();
+      return res.json(users)
+    } catch (e) {
+      next(e)
+    }
+  }
+
   async limitationUser(
     req: IGetUserAuthInfoRequest,
     res: Response,
     next: NextFunction,
   ) {
     try {
-      const { id } = req.user;
-      await userService.limitationUser(id);
-      return res.json('succesfull');
+      const { role } = req.user;
+      const userId = req.params.id;
+      const user = await userService.limitationUser(role, userId);
+      return res.json(user);
     } catch (e) {
       next(e);
     }

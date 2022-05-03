@@ -33,7 +33,6 @@ const CreateCollection = observer(({ collectionPayload, show, onHide }) => {
     }
   }, []);
   const tagsHandler = (data) => {
-    console.log(data);
     tags.setTags(data);
     setTagsState(data);
   };

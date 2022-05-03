@@ -47,3 +47,8 @@ export const updateItem = async(id,  itemId, payload) => {
   const res = await $authHost.put(`/api/collections/${id}/${itemId}`, payload);
   console.log(res.data)
 }
+
+export const getCollByTags = async(tags) => {
+  const res = await $authHost.get(`/api/tags/bytag`, {params: {tags: tags}});
+  return res.data;
+}

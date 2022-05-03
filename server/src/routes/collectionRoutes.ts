@@ -18,6 +18,7 @@ router.delete(
   collectionControllers.deleteCollection,
 );
 router.get('/', collectionControllers.getCollections);
+router.get('/bytags', collectionControllers.getCollByTags);
 router.put('/:id', authMiddleware, collectionControllers.updateCollection);
 router.post('/:id', authMiddleware, itemsController.createItem);
 router.delete('/:id/:itemId', authMiddleware, itemsController.deleteItem);

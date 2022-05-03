@@ -12,6 +12,7 @@ class UserControllers {
         id: user.id,
         email,
         role: user.role,
+        status: user.status,
       });
       return res.json({ token });
     } catch (e) {
@@ -27,6 +28,7 @@ class UserControllers {
         id: user.id,
         email,
         role: user.role,
+        status: user.status,
       });
       return res.json({ token });
     } catch (e) {
@@ -73,6 +75,7 @@ class UserControllers {
       id: req.user.id,
       email: req.user.email,
       role: req.user.role,
+      status: req.user.status,
     });
     return res.json({ token });
   }

@@ -9,8 +9,13 @@ export const registration = async(email, password) => {
 
 export const login = async(email, password) => {
   const {data} = await $host.post('/api/user/login', {email, password});
-  localStorage.setItem('token', data.token)
-  return jwt_decode(data.token);
+  const user = jwt_decode(data.token);
+  console.log(user)
+  if(user.status !== 'BANNED') {
+    localStorage.setItem('token', data.token)
+    return user;
+  }
+  alert('You are was banned')
 }
 
 export const check = async() => {

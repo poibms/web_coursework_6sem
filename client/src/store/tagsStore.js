@@ -10,7 +10,7 @@ export default class TagsStore {
     this._tags = tags
   }
 
-  get tags() {
+  get getTags() {
     return this._tags
   }  
   

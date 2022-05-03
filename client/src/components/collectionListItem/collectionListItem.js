@@ -11,7 +11,7 @@ const CollectionItem = ({ collection }) => {
   const isProfilePath = location.pathname === PROFILE_ROUTE
   return (
     <Col
-      md={isProfilePath ? 3 : 4}
+      md={3}
       className="mt-3"
       onClick={() => navigate(COLLECTION_ROUTE + '/' + collection.id)}
     >

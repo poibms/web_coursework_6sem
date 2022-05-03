@@ -20,9 +20,11 @@ const AuthPage = observer(() => {
     } else {
       data = await registration(email, password);
     }
-    user.setUser(data)
-    user.setIsAuth(true)
-    navigate(MAIN_ROUTE)
+    if(data !== undefined) {
+      user.setUser(data)
+      user.setIsAuth(true)
+      navigate(MAIN_ROUTE)
+    }
   }
   return (
     <div className='wrap'>

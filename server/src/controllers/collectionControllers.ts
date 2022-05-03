@@ -78,20 +78,41 @@ class CollectionControllers {
     try {
       const { id } = req.user;
       const colId = req.params.id;
-      const { title, description, tags } = req.body;
-      const { image } = req.files;
-      const updatedCol = await collectionService.updateCollection(
-        id,
-        title,
-        description,
-        image,
-        tags,
-        colId,
-      );
+      const payload = req.body;
+      console.log(payload);
+      const image = req.files;
+      let updatedCol;
+      if (!image) {
+        updatedCol = await collectionService.updateCollection(
+          id,
+          payload,
+          colId,
+        );
+      } else {
+        updatedCol = await collectionService.updateCollection(
+          id,
+          payload,
+          image,
+          colId,
+        );
+      }
+
       return res.json(updatedCol);
     } catch (e) {
       next(e);
     }
   }
+
+  public async getCollByTags(req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) {
+    try {
+      const tags = req.query.tags;
+
+      const collections = await collectionService.getCollByTags(tags);
+      return res.json(collections);
+    } catch (e) {
+      next(e);
+    }
+  }
+
 }
 module.exports = new CollectionControllers();

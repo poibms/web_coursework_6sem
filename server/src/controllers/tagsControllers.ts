@@ -16,7 +16,8 @@ class TagsControllers {
   async getAllTags(req: Request, res: Response, next: NextFunction) {
     try {
       const tags = await tagsService.getAllTags();
-      return res.json({ tags });
+      console.log(tags)
+      return res.json({ tags });  
     } catch (e) {
       next(e);
     }

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { IGetUserAuthInfoRequest } from '../middleware/authMiddleware';
 const userService = require('../services/userService');
 const tokenService = require('../services/tokenService');
+const ApiError = require('../error/apiError');
 
 class UserControllers {
   async registration(req: Request, res: Response, next: NextFunction) {
@@ -19,17 +20,21 @@ class UserControllers {
       next(e);
     }
   }
-
+  
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = req.body;
       const user = await userService.login(email, password);
+      if(user.role == 'BANNED') {
+        throw new ApiError.NoAccesRights();
+      }
       const token = tokenService.generate({
         id: user.id,
         email,
         role: user.role,
         status: user.status,
       });
+      console.log(token);
       return res.json({ token });
     } catch (e) {
       next(e);

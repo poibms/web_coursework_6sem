@@ -26,6 +26,7 @@ class CollectionControllers {
   async getCollections(req: Request, res: Response, next: NextFunction) {
     try {
       const collections = await collectionService.getCollections();
+      console.log(collections);
       return res.json(collections);
     } catch (e) {
       next(e);
@@ -53,6 +54,7 @@ class CollectionControllers {
       // eslint-disable-next-line prefer-const
       let { collection, collectItems } = await collectionService.getColById(id);
       collection = collection.rows[0];
+      console.log(collectItems);
       return res.json({ collection, collectItems });
     } catch (e) {
       next(ApiError.BadRequest(e));
@@ -65,9 +67,11 @@ class CollectionControllers {
     next: NextFunction,
   ) {
     try {
+      console.log('role');
       const { id, role } = req.user;
       const colId = req.params.colId;
       await collectionService.deleteCollection(id, colId, role);
+      console.log('succesfully deleted')
       return res.json('successfully deleted');
     } catch (e) {
       next(ApiError.BadRequest(e));

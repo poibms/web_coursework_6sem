@@ -2,6 +2,7 @@ export { };
 import { AnyTxtRecord } from 'dns';
 import { CollectionPayload, Collection } from '../config/collectionPayload';
 const ApiError = require('../error/apiError');
+// import db from '../db';
 const db = require('../db');
 const itemService = require('./itemService');
 const fileService = require('./fileService');
@@ -45,6 +46,7 @@ class CollectionService {
     inner join users on col.owner_id = users.id
     group by col.id, users.id order by col.id asc`);
     return collections.rows;
+    // return collections;
   }
 
   async getCollectionsByUserId(id: number): Promise<Collection[]> {
